@@ -48,12 +48,12 @@ namespace CS.Changelog.Console
 				return;
 
 			// Validate some more
-			if (!Uri.TryCreate(_options.IssueTrackerUrl, UriKind.Absolute, out _))
+			if (!string.IsNullOrEmpty(_options.IssueTrackerUrl) && !Uri.TryCreate(_options.IssueTrackerUrl, UriKind.Absolute, out _))
 			{
 				System.Console.Error.WriteLine($"{nameof(Options.IssueTrackerUrl)} : {_options.IssueTrackerUrl} is not a valid url");
 				return;
 			}
-			if (!Uri.TryCreate(_options.CommitDetailsUrl, UriKind.Absolute, out _))
+			if (!string.IsNullOrEmpty(_options.CommitDetailsUrl) && !Uri.TryCreate(_options.CommitDetailsUrl, UriKind.Absolute, out _))
 			{
 				System.Console.Error.WriteLine($"{nameof(Options.CommitDetailsUrl)} : {_options.CommitDetailsUrl} is not a valid url");
 				return;

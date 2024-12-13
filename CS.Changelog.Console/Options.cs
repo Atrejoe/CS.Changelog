@@ -1,10 +1,9 @@
-﻿using CommandLine;
-using CommandLine.Text;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using CommandLine;
 
 namespace CS.Changelog.Console
 {
@@ -80,7 +79,8 @@ namespace CS.Changelog.Console
 	/// </code>
 	/// </summary>
 	[SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "Option names follow naming conventions for command-line input")]
-	public class Options
+	[SuppressMessage("Maintainability", "CA1515:Consider making public types internal", Justification = "These options are parsed from oublic input.")]
+	public sealed class Options
 	{
 		/// <summary>Gets or sets the path to git.</summary>
 		/// <value>The path to git, defaults to <c>git</c>.</value>
