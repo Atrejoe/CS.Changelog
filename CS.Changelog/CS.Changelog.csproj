@@ -65,7 +65,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Markdig.Signed" Version="0.44.0" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 	</ItemGroup>
 
 </Project>
