@@ -41,7 +41,7 @@ namespace CS.Changelog.Tests
 
 			//Act & assert
 			foreach (var log in logs)
-				AssertIgnoredCommit(log);
+				AssertIgnoredCommit(log, options);
 		}
 
 		/// <summary>Tests <see cref="Parsing.Parse(string, ParseOptions)"/> by parsing a hotfix merge back into the development branch.</summary>
@@ -57,7 +57,7 @@ namespace CS.Changelog.Tests
 
 			//Act & assert
 			foreach (var log in logs)
-				AssertIgnoredCommit(log);
+				AssertIgnoredCommit(log, options);
 		}
 
 		/// <summary>Tests <see cref="Parsing.Parse(string, ParseOptions)"/> by parsing a merge from master back into the development branch (or anything else).</summary>
@@ -73,7 +73,7 @@ namespace CS.Changelog.Tests
 
 			//Act & assert
 			foreach (var log in logs)
-				AssertIgnoredCommit(log);
+				AssertIgnoredCommit(log, options);
 		}
 
 		/// <summary>Tests <see cref="Parsing.Parse(string, ParseOptions)"/> by parsing a hotfix completion.</summary>
@@ -107,7 +107,7 @@ This reverts commit 3c14f373aff2dc280907c4ee3878107f0a05b527."
 			};
 
 			foreach (var log in logs)
-				AssertIgnoredCommit(log);
+				AssertIgnoredCommit(log, new ParseOptions());
 		}
 
 		/// <summary>Tests <see cref="Parsing.Parse(string, ParseOptions)"/> by parsing a commit message without a change log message.</summary>
@@ -181,7 +181,7 @@ e226d3ad1c5f49caaaddf3e6e43135f092cc3c5e '2017-06-26T15:09:24+02:00' [{category1
 
 				Trace.WriteLine(string.Empty);
 				Trace.WriteLine("Changeset:");
-				(new TraceChangelogExporter()).Export(entries);
+				(new TraceChangelogExporter()).Export(entries, null);
 
 				Assert.Equal(3, entries.Count);
 
@@ -219,18 +219,17 @@ e226d3ad1c5f49caaaddf3e6e43135f092cc3c5e '2017-06-26T15:09:24+02:00' [{category1
 
 			//Act & assert
 			foreach (var log in logs)
-				AssertIgnoredCommit(log);
+				AssertIgnoredCommit(log, options);
 		}
 
-		private static void AssertIgnoredCommit(string log)
+		private static void AssertIgnoredCommit(string log, ParseOptions options)
 		{
-			ParseOptions options = new ParseOptions();
 
 			//Act
 			var changeset = Parsing.Parse(log, options);
 
 			//Assert
-			Assert.False(changeset.Any(), $"Log entry should lead to ignored commit. Entry: {log} caused change log message :  {(changeset.Any() ? changeset.First().Message : null)} ({(changeset.Any() ? changeset.First().Hash : null)})");
+			Assert.False(changeset.Any(), $"Log entry should lead to ignored commit. Entry: {log} caused change log message :  {(changeset.Any() ? changeset[0].Message : null)} ({(changeset.Any() ? changeset[0].Hash : null)})");
 		}
 
 		private static ChangeLogMessage AssertChange(string log, string category)

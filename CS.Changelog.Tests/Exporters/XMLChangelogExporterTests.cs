@@ -1,4 +1,4 @@
-using Xunit;
+﻿using Xunit;
 
 namespace CS.Changelog.Exporters.Tests
 {
@@ -14,7 +14,7 @@ namespace CS.Changelog.Exporters.Tests
 		/// <returns>A <see cref="XmlChangelogExporter"/>.</returns>
 		protected override XmlChangelogExporter GetExporter()
 		{
-			Skip.If(true, "Xmlseralization incomplete");
+			Assert.Skip("Xml serialization incomplete");
 
 			return new XmlChangelogExporter();
 		}

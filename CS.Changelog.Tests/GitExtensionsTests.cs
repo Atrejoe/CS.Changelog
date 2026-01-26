@@ -12,15 +12,15 @@ namespace CS.Changelog.Tests
 	public class GitExtensionsTests
 	{
 		/// <summary>Tests <see cref="GitExtensions.GetHistory"/></summary>
-		[SkippableFact]
+		[Fact]
 		public void GenerateChangeLogTest()
 		{
 			var solutionPath = Directory
 								.GetParent(Assembly.GetExecutingAssembly().Location)
 								.Parent.Parent.Parent.FullName;
 
-			Skip.IfNot(
-				Directory.Exists(Path.Combine(solutionPath, ".git")),
+			Assert.SkipWhen(
+				!Directory.Exists(Path.Combine(solutionPath, ".git")),
 				$"Path {solutionPath} is not a git repository");
 
 			var log = GitExtensions.GetHistory(solutionPath);
@@ -47,10 +47,10 @@ namespace CS.Changelog.Tests
 		internal static string GetThisRepoChangelog()
 		{
 			var path = thisrepopath;
-			Skip.IfNot(Directory.Exists(path)
+			Assert.SkipUnless(Directory.Exists(path)
 				, $"Path {path} does not exist");
 
-			Skip.IfNot(Directory.Exists(Path.Combine(path, ".git"))
+			Assert.SkipUnless(Directory.Exists(Path.Combine(path, ".git"))
 				, $"Path {path} is not a git repository");
 
 			var log = GitExtensions.GetHistory(path);
@@ -65,7 +65,7 @@ namespace CS.Changelog.Tests
 		internal const string swissportcargodcmrepopath = @"C:\Users\robert\Documents\Source\Cohelion\swissport-dcm";
 
 		/// <summary>Tests <see cref="GitExtensions.GetHistory"/> using <see cref="swissportcargodcmrepopath"/>.</summary>
-		[SkippableFact(Skip = "ignoreonbuildserver")]
+		[Fact(Skip = "ignoreonbuildserver")]
 		public void GenerateChangeLogTestSwissport()
 		{
 			var log = GetSwissportRepoChangelog();
@@ -82,10 +82,10 @@ namespace CS.Changelog.Tests
 		{
 			var path = swissportcargodcmrepopath;
 
-			Skip.IfNot(Directory.Exists(path)
+			Assert.SkipUnless(Directory.Exists(path)
 				, $"Path {path} does not exist");
 
-			Skip.IfNot(Directory.Exists(Path.Combine(path, ".git"))
+			Assert.SkipUnless(Directory.Exists(Path.Combine(path, ".git"))
 				, $"Path {path} is not a git repository");
 
 			var log = GitExtensions.GetHistory(path);

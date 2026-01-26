@@ -24,45 +24,20 @@ namespace CS.Changelog.Exporters
 		{
 			IChangelogExporter exporter = null;
 
-			// Clean the changes
-			//CleanChangeSet(ref changes, exportOptions);
-
 			var file = new FileInfo(targetFile);
 
 			if (string.IsNullOrWhiteSpace(file.Extension))
 				file = new FileInfo($"{targetFile}.{format.FileExtension()}");
 
-			switch (format)
+			exporter = format switch
 			{
-				case OutputFormat.MarkDown:
-
-					exporter = new MarkDownChangelogExporter();
-					break;
-
-				case OutputFormat.Console:
-
-					exporter = new ConsoleChangelogExporter();
-					break;
-
-				case OutputFormat.JSON:
-
-					exporter = new JsonChangelogExporter();
-					break;
-
-				case OutputFormat.XML:
-
-					exporter = new XmlChangelogExporter();
-					break;
-
-				case OutputFormat.Html:
-
-					exporter = new HtmlChangelogExporter();
-					break;
-
-				default:
-					throw new NotImplementedException($"Export to {format} is not yet implemented");
-			}
-
+				OutputFormat.MarkDown => new MarkDownChangelogExporter(),
+				OutputFormat.Console => new ConsoleChangelogExporter(),
+				OutputFormat.JSON => new JsonChangelogExporter(),
+				OutputFormat.XML => new XmlChangelogExporter(),
+				OutputFormat.Html => new HtmlChangelogExporter(),
+				_ => throw new NotImplementedException($"Export to {format} is not yet implemented"),
+			};
 			file.Directory.AssertExistence();
 
 			exporter.Export(changes, file, exportOptions);
@@ -71,18 +46,5 @@ namespace CS.Changelog.Exporters
 
 			return file;
 		}
-
-		///// <summary>
-		///// Cleans the change set.
-		///// </summary>
-		///// <param name="changes">The changes.</param>
-		///// <param name="options">The options.</param>
-		//private static void CleanChangeSet(ref ChangeSet changes, ExportOptions options)
-		//{
-		//	foreach (var change in changes)
-		//	{
-		//		change.
-		//	}
-		//}
 	}
 }

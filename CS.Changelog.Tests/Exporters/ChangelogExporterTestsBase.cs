@@ -15,7 +15,7 @@ namespace CS.Changelog.Exporters.Tests
 		protected abstract T GetExporter();
 
 		/// <summary>Tests implementation of <see cref="IChangelogExporter.Export(ChangeSet, FileInfo, ExportOptions)"/> by <see cref="JsonChangelogExporter.Export"/></summary>
-		[SkippableFact]
+		[Fact]
 		public void ExportThisRepoTest()
 		{
 			//Arrange
@@ -26,7 +26,7 @@ namespace CS.Changelog.Exporters.Tests
 		}
 
 		/// <summary>Tests implementation of <see cref="IChangelogExporter.Export(ChangeSet, FileInfo, ExportOptions)"/> by <see cref="JsonChangelogExporter.Export"/></summary>
-		[SkippableFact]
+		[Fact]
 		public void ExportOtherRepoTest()
 		{
 			//Arrange
@@ -37,7 +37,7 @@ namespace CS.Changelog.Exporters.Tests
 		}
 
 		/// <summary>Tests implementation of <see cref="IChangelogExporter.Export(ChangeSet, FileInfo, ExportOptions)"/> by <see cref="JsonChangelogExporter.Export"/></summary>
-		[SkippableFact]
+		[Fact]
 		public void ExportParseTest2Test()
 		{
 			//Arrange

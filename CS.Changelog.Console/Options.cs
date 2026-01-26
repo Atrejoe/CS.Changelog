@@ -244,19 +244,6 @@ namespace CS.Changelog.Console
 			HelpText = "Recognized issue numbers will be converted to links when set to false")]
 		public bool DontLinkifyIssueNumbers { get; set; }
 
-		///// <summary>Gets or sets the last state of the parser.</summary>
-		///// <value>The last state of the parser.</value>
-		//[ParserState, XmlIgnore]
-		//public IParserState LastParserState { get; set; }
-
-		///// <summary>Gets the instructions for these parameters when used in a console application.</summary>
-		///// <returns>A help text explaining how to use the application.</returns>
-		//[Option('h', "help")]
-		//public string GetUsage()
-		//{
-		//    return HelpText.AutoBuild(this,
-		//      (HelpText current) => HelpText.DefaultParsingErrorsHandler(this, current));
-		//}
 
 		//CS-enhanced Gitflow branches
 		#region Gitflow settings

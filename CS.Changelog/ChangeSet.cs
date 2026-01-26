@@ -32,7 +32,7 @@ namespace CS.Changelog
 		{
 			get
 			{
-				return ToArray(); ;
+				return ToArray();
 			}
 			set
 			{

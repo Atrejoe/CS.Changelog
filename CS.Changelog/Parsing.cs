@@ -143,8 +143,8 @@ namespace CS.Changelog
 						else
 						{
 							var fromBranchMatch = branchNameRegex.Match(fromBranch);
-							var fromBranchPrefix = fromBranchMatch.Groups["prefix"].Value;//.ToLower(CultureInfo.InvariantCulture);
-							var fromBranchFullName = fromBranchMatch.Groups["fullname"].Value;//.ToLower(CultureInfo.InvariantCulture);
+							var fromBranchPrefix = fromBranchMatch.Groups["prefix"].Value;
+							var fromBranchFullName = fromBranchMatch.Groups["fullname"].Value;
 
 							if (string.IsNullOrWhiteSpace(toBranch))
 							{
@@ -225,10 +225,6 @@ namespace CS.Changelog
 							else
 							{
 								LogCommit($@"{match.Groups["frombranch"].Value} => {match.Groups["tobranch"].Value} {match.Groups["remainder"].Value}", match, level: LogLevel.Warning);
-								//if (fromBranchPrefix.Equals(o.prefix_feature, c)) { }
-								//else if (fromBranchPrefix.Equals(o.prefix_release, c)) { }
-								//else if (fromBranchPrefix.Equals(o.prefix_hotfix, c)) { }
-								//else { }
 							}
 						}
 					}
@@ -236,10 +232,10 @@ namespace CS.Changelog
 					//If entire commit is not ignore, append any categorized release message
 					if (!ignored && messagematches.Count > 0)
 					{
-						foreach (Match messagematch in messagematches)
+						foreach (var groups in messagematches.Select(x=>x.Groups))
 						{
 							LogCommit($"Commit with changelog category added : {message}", match, level: LogLevel.Info);
-							result.Add(hash, messagematch.Groups["category"].Value, CleanMessage(messagematch.Groups["message"].Value, options.IssueNumberRegex));
+							result.Add(hash, groups["category"].Value, CleanMessage(groups["message"].Value, options.IssueNumberRegex));
 						}
 					}
 				}
@@ -263,14 +259,14 @@ namespace CS.Changelog
 		static void LogCommitMessage(string message, ConsoleColor? color = null, LogLevel level = LogLevel.Info)
 		{
 			var i = 0;
-			foreach (Match match in commitMessageRegex.Matches(message))
+			foreach (var value in commitMessageRegex.Matches(message).Select(x=>x.Value))
 			{
-				if (string.IsNullOrWhiteSpace(match.Value))
+				if (string.IsNullOrWhiteSpace(value))
 					continue;
 
 				i++;
 
-				$@"{i})		{match.Value.Trim()}".Dump(color: color.GetValueOrDefault(level.ToConsoleColor()));
+				$@"{i})		{value.Trim()}".Dump(color: color.GetValueOrDefault(level.ToConsoleColor()));
 			}
 		}
 		static void LogIgnoredCommit(string reason, Match match, ref bool ignored)
@@ -305,7 +301,7 @@ namespace CS.Changelog
 				//	If multiple matches are found, then leave the message as is
 				if (matches.Count > 1) return result;
 
-				var issueNumber = matches.First().Value;
+				var issueNumber = matches[0].Value;
 
 				//	If message doesn't contain spaces, suspect the message is the branch name, replace underscores with spaces
 				if (!message.Contains(' ', StringComparison.OrdinalIgnoreCase))
@@ -319,8 +315,7 @@ namespace CS.Changelog
 				{
 					//	There should only be one message with text after splitting by the issue number.
 					var issueMessage = IssueFormat.Split(message)
-												  .Where(x => !string.IsNullOrWhiteSpace(x))
-												  .FirstOrDefault();
+												  .FirstOrDefault(x => !string.IsNullOrWhiteSpace(x));
 
 					// In case the message is only the issue number
 					if (issueMessage is null)

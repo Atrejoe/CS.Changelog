@@ -71,7 +71,7 @@ Obtaining latest release using : {gitGetStartArgument}"
 									case "fatal: No names found, cannot describe anything.":
 										break;
 									default:
-										throw new Exception($"Error while obtaining the previous release name : {errorMessage}");
+										throw new InvalidOperationException($"Error while obtaining the previous release name : {errorMessage}");
 								}
 							}
 						}
@@ -88,7 +88,7 @@ Obtaining latest release using : {gitGetStartArgument}"
 			}
 			catch (Exception ex)
 			{
-				throw new Exception($"Error while obtaining the previous release name using git at `{pathToGit}` : {ex.Message}");
+				throw new InvalidOperationException($"Error while obtaining the previous release name using git at `{pathToGit}` : {ex.Message}",ex);
 			}
 
 			//Switches:
@@ -115,7 +115,7 @@ Obtaining latest release using : {gitGetStartArgument}"
 				p.WaitForExit();
 
 				if (p.ExitCode != 0)
-					throw new System.Exception(p.StandardError.ReadToEnd());
+					throw new InvalidOperationException(p.StandardError.ReadToEnd());
 			}
 
 			return result.ToString();
