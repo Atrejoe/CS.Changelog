@@ -44,7 +44,7 @@
 		</PackageReleaseNotes>
 		<ApplicationIcon />
 		<StartupObject />
-		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackAsTool>True</PackAsTool>
 		<ToolCommandName>changelog</ToolCommandName>
 		<PackageTags>git changelog generator</PackageTags>
@@ -56,6 +56,7 @@
 		<DebugType>embedded</DebugType>
 		<PackageReadmeFile>ReadMe.md</PackageReadmeFile>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+		<PackageId>RobertSirre.Changelog.Console</PackageId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)'=='Tool'">
